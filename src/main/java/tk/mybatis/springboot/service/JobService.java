@@ -46,7 +46,8 @@ public class JobService {
         if (job.getPage() != null && job.getRows() != null) {
             PageHelper.startPage(job.getPage(), job.getRows(), "id");
         }
-        return  jobMapper.selectJobList();
+        List<Job> jobList = jobMapper.selectJobList();
+        return  jobList;
     }
 
     public Job getById(Integer id) {

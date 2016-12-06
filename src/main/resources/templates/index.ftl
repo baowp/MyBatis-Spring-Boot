@@ -117,7 +117,7 @@
         <table class="gridtable" style="width:100%;">
             <thead>
             <tr>
-                <th colspan="4">查询结果 - [<a href="${request.contextPath}/countries/add">新增国家(地区)</a>]</th>
+                <th colspan="8">查询结果 - [<a href="${request.contextPath}/countries/add">新增国家(地区)</a>]</th>
             </tr>
             <tr>
                 <th>id</th>
@@ -126,11 +126,11 @@
                 <th>trigger名称</th>
                 <th>表达式</th>
                 <th>访问的url</th>
-                <th>操作</th>
+                <th colspan="2">操作</th>
             </tr>
             </thead>
             <tbody>
-                <#list pageInfo.list as country>
+                <#list pageInfo.list as job>
                 <tr>
                     <td>${job.id}</td>
                     <td>${job.jobName}</td>
@@ -138,9 +138,13 @@
                     <td>${job.triggerName}</td>
                     <td>${job.cronExpression}</td>
                     <td>${job.url}</td>
-                    <td style="text-align:center;">[<a
-                            href="${request.contextPath}/countries/view/${country.id}">修改</a>] -
-                        [<a href="${request.contextPath}/countries/delete/${country.id}">删除</a>]
+                    <td style="text-align:center;">
+                        [<a href="${request.contextPath}/job/view/${job.id}">修改</a>] -
+                        [<a href="${request.contextPath}/job/delete/${job.id}">删除</a>]
+                    </td>
+                    <td style="text-align:center;">
+                        [<a href="${request.contextPath}/job/startJob/${job.id}">开始任务</a>] -
+                        [<a href="${request.contextPath}/job/stopJob/${job.id}">停止任务</a>]
                     </td>
                 </tr>
                 </#list>

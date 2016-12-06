@@ -52,8 +52,8 @@ public class JobController {
     @RequestMapping
     public ModelAndView getAll(Job job) {
         ModelAndView result = new ModelAndView("index");
-        List<Job> countryList = jobService.getAll(job);
-        result.addObject("pageInfo", new PageInfo<Job>(countryList));
+        List<Job> jobList = jobService.getAll(job);
+        result.addObject("pageInfo", new PageInfo<Job>(jobList));
         result.addObject("queryParam", job);
         result.addObject("page", job.getPage());
         result.addObject("rows", job.getRows());
