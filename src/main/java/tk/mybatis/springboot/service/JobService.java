@@ -22,14 +22,46 @@
  * THE SOFTWARE.
  */
 
-package tk.mybatis.springboot.mapper;
+package tk.mybatis.springboot.service;
 
-import tk.mybatis.springboot.model.Country;
-import tk.mybatis.springboot.util.MyMapper;
+import com.github.pagehelper.PageHelper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import tk.mybatis.springboot.mapper.JobMapper;
+import tk.mybatis.springboot.model.Job;
 
-import java.util.HashMap;
 import java.util.List;
 
-public interface CountryMapper extends MyMapper<Country> {
-    public List<Country> getCountries();
+/**
+ * @author liuzh
+ * @since 2015-12-19 11:09
+ */
+@Service
+public class JobService {
+
+    @Autowired
+    private JobMapper jobMapper;
+
+    public List<Job> getAll(Job job) {
+        if (job.getPage() != null && job.getRows() != null) {
+            PageHelper.startPage(job.getPage(), job.getRows(), "id");
+        }
+        return  jobMapper.selectJobList();
+    }
+
+    public Job getById(Integer id) {
+        return jobMapper.selectByPrimaryKey(id);
+    }
+
+    public void deleteById(Integer id) {
+        jobMapper.deleteByPrimaryKey(id);
+    }
+
+    public void save(Job job) {
+        if (job.getId() != null) {
+            jobMapper.updateByPrimaryKey(job);
+        } else {
+            jobMapper.insert(job);
+        }
+    }
 }

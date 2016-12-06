@@ -26,7 +26,7 @@
     <div class="middle">
         <h1 style="padding: 50px 0 20px;">国家(地区)列表</h1>
 
-        <form action="${request.contextPath}/countries" method="post">
+        <form action="${request.contextPath}/job" method="post">
             <table class="gridtable" style="width:100%;">
                 <tr>
                     <th>国家(地区)名称：</th>
@@ -120,18 +120,24 @@
                 <th colspan="4">查询结果 - [<a href="${request.contextPath}/countries/add">新增国家(地区)</a>]</th>
             </tr>
             <tr>
-                <th>ID</th>
-                <th>国家(地区)名</th>
-                <th>国家(地区)代码</th>
+                <th>id</th>
+                <th>job名称</th>
+                <th>group名称</th>
+                <th>trigger名称</th>
+                <th>表达式</th>
+                <th>访问的url</th>
                 <th>操作</th>
             </tr>
             </thead>
             <tbody>
                 <#list pageInfo.list as country>
                 <tr>
-                    <td>${country.id}</td>
-                    <td>${country.countryname}</td>
-                    <td>${country.countrycode}</td>
+                    <td>${job.id}</td>
+                    <td>${job.jobName}</td>
+                    <td>${job.groupName}</td>
+                    <td>${job.triggerName}</td>
+                    <td>${job.cronExpression}</td>
+                    <td>${job.url}</td>
                     <td style="text-align:center;">[<a
                             href="${request.contextPath}/countries/view/${country.id}">修改</a>] -
                         [<a href="${request.contextPath}/countries/delete/${country.id}">删除</a>]

@@ -25,5 +25,12 @@
 
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="tk.mybatis.springboot.mapper.CountryMapper">
-
+    <select id="getCountries" resultType="tk.mybatis.springboot.model.Country">
+        SELECT
+            Id as id,
+            countryname as countryname,
+            countrycode as countrycode
+        FROM
+	        country
+    </select>
 </mapper>
