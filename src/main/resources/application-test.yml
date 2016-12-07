@@ -1,0 +1,13 @@
+server:
+    port: 9080
+    context-path:
+
+logging:
+    level:
+        tk.mybatis: INFO
+
+spring:
+    datasource:
+        url: jdbc:mysql://192.168.5.10:3306/dnkx_manage
+        username: root
+        password: root

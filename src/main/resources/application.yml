@@ -4,7 +4,7 @@ server:
 
 logging:
     level:
-        tk.mybatis: DEBUG
+        tk.mybatis: debug
 
 spring:
     datasource:
