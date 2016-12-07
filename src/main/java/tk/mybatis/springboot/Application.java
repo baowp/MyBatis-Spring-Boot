@@ -22,6 +22,6 @@ public class Application extends WebMvcConfigurerAdapter {
 
     @RequestMapping("/")
     String home() {
-        return "redirect:countries";
+        return "redirect:job";
     }
 }

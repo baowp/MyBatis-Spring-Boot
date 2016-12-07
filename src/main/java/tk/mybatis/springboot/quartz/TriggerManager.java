@@ -33,6 +33,7 @@ public class TriggerManager {
         log.info("------- Initialization Complete --------");
         log.info("------- Scheduling Jobs ----------------");
         JobDetail job = newJob(ExpAnalysisJob.class).withIdentity("expAnalysisJob", "httpRequest").build();
+        job.getJobDataMap().put("url","http://127.0.0.1:8080/expAna/doExpStatisticsDefault.do");
         //0 0 2 * * ?    每天2点触发
         // 0/20 * * * * ? 20 seconds
         CronTrigger trigger = newTrigger().withIdentity("expAnalysisJobTrigger", "httpRequest").withSchedule(cronSchedule("0 0 2 * * ?")).build();

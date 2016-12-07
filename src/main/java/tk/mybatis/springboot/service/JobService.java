@@ -25,11 +25,16 @@
 package tk.mybatis.springboot.service;
 
 import com.github.pagehelper.PageHelper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tk.mybatis.springboot.mapper.JobMapper;
 import tk.mybatis.springboot.model.Job;
+import tk.mybatis.springboot.quartz.ExpAnalysisJob;
+import tk.mybatis.springboot.quartz.QuartzManager;
 
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -38,6 +43,7 @@ import java.util.List;
  */
 @Service
 public class JobService {
+    private static Logger log = LoggerFactory.getLogger(JobService.class);
 
     @Autowired
     private JobMapper jobMapper;
@@ -62,7 +68,85 @@ public class JobService {
         if (job.getId() != null) {
             jobMapper.updateByPrimaryKey(job);
         } else {
-            jobMapper.insert(job);
+            //判断是否数据库中group中是否已经存在该jobName
+            List<Job> jobList = jobMapper.getJobsByJobGroup(job.getGroupName());
+            if(contain(jobList,job.getJobName())){
+                return;
+            }
+            jobMapper.insertJob(job);
         }
+    }
+
+    /**
+     * 根据jobid查询job信息，运行job
+     * @param id
+     */
+    public void startJob(Integer id) {
+        log.info("--------------------startJob begin----------------------");
+        Job job = jobMapper.selectByPrimaryKey(id);
+        String jobName = job.getJobName();
+        String jobGroup = job.getGroupName();
+        String triggerName = job.getTriggerName();
+        String url = job.getUrl();
+        String cronExpression = job.getCronExpression();
+        QuartzManager.startJob(jobName,jobGroup, triggerName, url, ExpAnalysisJob.class, cronExpression);
+        log.info("--------------------startJob end----------------------");
+    }
+
+    /**
+     *
+     * @comment 判断数组中是否包含字符串
+     * @param
+     * @return
+     * @Author xhl
+     * @Date 2015年10月30日 下午4:59:03
+     * @since 1.0.0
+     */
+    public static boolean contain(List<Job> list, String str) {
+        for (int i = 0; i < list.size(); i++) {
+            if (list.get(i).getJobName().equals(str)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * 运行job或者停止job，更新数据库中job的状态
+     * @param id
+     * @param status 0：job停止 1：job运行中
+     */
+    public void updateJobStatus(Integer id, String status) {
+        HashMap map = new HashMap();
+        map.put("id", id);
+        map.put("status", status);
+        jobMapper.updateJobStatus(map);
+    }
+
+    /**
+     * 根据jobid查询job信息，运行job
+     * @param id
+     */
+    public void stopJob(Integer id) {
+        log.info("--------------------stopJob begin----------------------");
+        Job job = jobMapper.selectByPrimaryKey(id);
+        String jobGroup = job.getGroupName();
+        String triggerName = job.getTriggerName();
+        QuartzManager.pauseJob(triggerName, jobGroup);
+        log.info("--------------------stopJob end----------------------");
+    }
+
+    /**
+     * 根据jobid查询job信息，运行job
+     * @param id
+     */
+    public void removeJob(Integer id) {
+        log.info("--------------------removeJob begin----------------------");
+        Job job = jobMapper.selectByPrimaryKey(id);
+        String jobName = job.getJobName();
+        String jobGroup = job.getGroupName();
+        String triggerName = job.getTriggerName();
+        QuartzManager.removeJob(jobName, jobGroup, triggerName);
+        log.info("--------------------removeJob end----------------------");
     }
 }

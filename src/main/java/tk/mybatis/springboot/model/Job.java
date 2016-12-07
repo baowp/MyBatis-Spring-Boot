@@ -13,6 +13,8 @@ public class Job extends BaseEntity {
 
     private String url;
 
+    private String status;
+
     public Integer getId() {
         return id;
     }
@@ -59,5 +61,18 @@ public class Job extends BaseEntity {
 
     public void setUrl(String url) {
         this.url = url == null ? null : url.trim();
+    }
+
+    public String getStatus() {
+        /*if(status.equals("0")){
+            status = "job未运行";
+        }else if(status.equals("1")){
+            status = "job运行中";
+        }*/
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }
