@@ -211,38 +211,5 @@ public final class HttpClientUtil {
         return responseResult;
     }
 
-    /**
-     * 测试方法
-     * @param args
-     */
-    /*public static void main(String[] args)throws Exception{
 
-        //String url = "http://192.168.33.33:7001/rworg/rworg/poPublic.do?method=portalSearch";
-        String url = "http://localhost:8080/auth/org/delete.do";
-        Map params = new HashMap();
-        params.put("id", 0106666);
-
-        *//*params.put("method","saveUser");
-        params.put("userAccount","admin");
-        params.put("keyWords","111");
-        params.put("type","中午 我的是");*//*
-
-        *//*HttpClientUtil util = HttpClientUtil.getInstance("GBK");*//*
-        HttpClientUtil util = HttpClientUtil.getInstance();
-
-        String resultStr = util.getResponseBodyAsString(url,params);
-        byte[] resultArr = util.getResponseBodyAsByteArray(url,params);
-
-        File file = new File("D:\\result.txt");
-        FileOutputStream out = new FileOutputStream(file);
-
-        util.getResponseBodyAsStream(url,params,out);
-
-        System.out.println("HttpClientUtil.main()-result:"+resultStr);
-        if(resultArr != null){
-            System.out.println("HttpClientUtil.main()-result:"+new String(resultArr));
-        }
-
-
-    }*/
 }
