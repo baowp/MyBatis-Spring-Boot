@@ -63,7 +63,7 @@ public class JobController {
     @RequestMapping(value = "/add")
     public ModelAndView add() {
         ModelAndView result = new ModelAndView("view");
-        result.addObject("country", new Country());
+        result.addObject("job", new Country());
         return result;
     }
 
@@ -77,7 +77,8 @@ public class JobController {
 
     @RequestMapping(value = "/delete/{id}")
     public ModelAndView delete(@PathVariable Integer id, RedirectAttributes ra) {
-        ModelAndView result = new ModelAndView("redirect:/countries");
+        ModelAndView result = new ModelAndView("redirect:/job");
+        jobService.removeJob(id);
         jobService.deleteById(id);
         ra.addFlashAttribute("msg", "删除成功!");
         return result;
@@ -88,8 +89,44 @@ public class JobController {
         ModelAndView result = new ModelAndView("view");
         String msg = job.getId() == null ? "新增成功!" : "更新成功!";
         jobService.save(job);
+        job.setStatus("0");
         result.addObject("job", job);
         result.addObject("msg", msg);
         return result;
     }
+
+    /**
+     * 根据job的id获取数据库中保存的job运行，并更新job的状态
+     * @param id
+     * @param job
+     * @return
+     */
+    @RequestMapping(value = "/startJob/{id}", method = RequestMethod.GET)
+    public ModelAndView startJob(@PathVariable Integer id, Job job) {
+        ModelAndView result = new ModelAndView("redirect:/job");
+        jobService.startJob(id);
+        jobService.updateJobStatus(id,"1");//0：job停止  1：job运行中（数据库中）
+
+        job.setStatus("1");
+        result.addObject("job", job);
+        result.addObject("msg", "启动job成功");
+        return result;
+    }
+
+    /**
+     * 根据job的id获取数据库中保存的job运行，并更新job的状态
+     * @param id
+     * @param job
+     * @return
+     */
+    @RequestMapping(value = "/stopJob/{id}", method = RequestMethod.GET)
+    public ModelAndView stopJob(@PathVariable Integer id, Job job) {
+        ModelAndView result = new ModelAndView("redirect:/job");
+        jobService.stopJob(id);
+        jobService.updateJobStatus(id,"0");//0：job停止  1：job运行中（数据库中）
+        result.addObject("job", job);
+        result.addObject("msg", "停止job成功");
+        return result;
+    }
+
 }

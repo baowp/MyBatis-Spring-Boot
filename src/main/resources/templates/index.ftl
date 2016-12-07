@@ -24,7 +24,7 @@
 <body>
 <div class="wrapper">
     <div class="middle">
-        <h1 style="padding: 50px 0 20px;">国家(地区)列表</h1>
+        <h1 style="padding: 50px 0 20px;">job列表</h1>
 
         <form action="${request.contextPath}/job" method="post">
             <table class="gridtable" style="width:100%;">
@@ -117,7 +117,7 @@
         <table class="gridtable" style="width:100%;">
             <thead>
             <tr>
-                <th colspan="8">查询结果 - [<a href="${request.contextPath}/countries/add">新增国家(地区)</a>]</th>
+                <th colspan="9">查询结果 - [<a href="${request.contextPath}/job/add">新增JOB</a>]</th>
             </tr>
             <tr>
                 <th>id</th>
@@ -126,6 +126,7 @@
                 <th>trigger名称</th>
                 <th>表达式</th>
                 <th>访问的url</th>
+                <th>job运行状态</th>
                 <th colspan="2">操作</th>
             </tr>
             </thead>
@@ -138,6 +139,7 @@
                     <td>${job.triggerName}</td>
                     <td>${job.cronExpression}</td>
                     <td>${job.url}</td>
+                    <td>${job.status}</td>
                     <td style="text-align:center;">
                         [<a href="${request.contextPath}/job/view/${job.id}">修改</a>] -
                         [<a href="${request.contextPath}/job/delete/${job.id}">删除</a>]

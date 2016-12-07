@@ -22,18 +22,18 @@
  * THE SOFTWARE.
  */
 
-package tk.mybatis.springboot.quartz;
+package tk.mybatis.springboot.service;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.test.SpringApplicationConfiguration;
-import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 import tk.mybatis.springboot.Application;
+import tk.mybatis.springboot.quartz.TriggerManager;
 
 import javax.annotation.Resource;
 
@@ -45,36 +45,17 @@ import javax.annotation.Resource;
 @WebAppConfiguration
 @Transactional
 @SpringApplicationConfiguration(Application.class)
-public class SimpleExampleTest {
+public class JobServiceTest {
     private Logger logger = LoggerFactory.getLogger(getClass());
 
     @Resource
-    private TriggerManager triggerManager;
-
-    /*@Test
-    @Rollback
-    public void testSimpleExampleRun() {
-        try {
-            simpleExample.run();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+    private JobService jobService;
 
     @Test
-    @Rollback
-    public void testSimpleTriggerExampleRun() {
+    public void startJobTest() {
         try {
-            simpleTriggerExample.run();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }*/
-
-    @Test
-    public void testTriggerManagerRun() {
-        try {
-            triggerManager.runExpAnalysisJob();
+            Integer id = 1;
+            jobService.startJob(id);
         } catch (Exception e) {
             e.printStackTrace();
         }

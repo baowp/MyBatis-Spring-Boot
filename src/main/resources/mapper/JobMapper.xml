@@ -8,15 +8,45 @@
     <result column="trigger_name" property="triggerName" jdbcType="VARCHAR" />
     <result column="cron_expression" property="cronExpression" jdbcType="VARCHAR" />
     <result column="url" property="url" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, job_name, group_name, trigger_name, cron_expression, url
+    id, job_name, group_name, trigger_name, cron_expression, url, status
   </sql>
 
+  <insert id="insertJob" parameterType="tk.mybatis.springboot.model.Job">
+    INSERT INTO job
+        (job_name, group_name, trigger_name, cron_expression, url, status)
+    VALUES (
+    #{jobName},
+    #{groupName},
+    #{triggerName},
+    #{cronExpression},
+    #{url},
+    0)
+  </insert>
 
+  <!-- 运行job或者停止job更新数据库中job的状态 -->
+  <update id="updateJobStatus" parameterType="java.util.HashMap">
+    UPDATE job
+    set status = #{status}
+    where id = #{id}
+  </update>
+
+  <!-- 获取已经新增的job列表 -->
   <select id="selectJobList" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
     from job
   </select>
+
+  <!-- 根据jobgroup获取所有该jobgroup下面的job -->
+  <select id="getJobsByJobGroup" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from job
+    WHERE
+    group_name = #{groupName}
+  </select>
+
 </mapper>

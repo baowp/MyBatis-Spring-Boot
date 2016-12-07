@@ -215,19 +215,19 @@ public final class HttpClientUtil {
      * 测试方法
      * @param args
      */
-    public static void main(String[] args)throws Exception{
+    /*public static void main(String[] args)throws Exception{
 
         //String url = "http://192.168.33.33:7001/rworg/rworg/poPublic.do?method=portalSearch";
         String url = "http://localhost:8080/auth/org/delete.do";
         Map params = new HashMap();
         params.put("id", 0106666);
 
-        /*params.put("method","saveUser");
+        *//*params.put("method","saveUser");
         params.put("userAccount","admin");
         params.put("keyWords","111");
-        params.put("type","中午 我的是");*/
+        params.put("type","中午 我的是");*//*
 
-        /*HttpClientUtil util = HttpClientUtil.getInstance("GBK");*/
+        *//*HttpClientUtil util = HttpClientUtil.getInstance("GBK");*//*
         HttpClientUtil util = HttpClientUtil.getInstance();
 
         String resultStr = util.getResponseBodyAsString(url,params);
@@ -244,5 +244,5 @@ public final class HttpClientUtil {
         }
 
 
-    }
+    }*/
 }

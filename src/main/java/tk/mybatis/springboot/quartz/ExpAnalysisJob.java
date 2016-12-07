@@ -49,20 +49,25 @@ public class ExpAnalysisJob implements Job {
      * @throws JobExecutionException if there is an exception while executing the job.
      */
     public void execute(JobExecutionContext context) throws JobExecutionException {
-        //JobKey jobKey = context.getJobDetail().getKey();
-        //log.info("SimpleJob says: " + jobKey + " executing at " + new Date());
+        String url = context.getJobDetail().getJobDataMap().getString("url");
+        JobKey jobKey = context.getJobDetail().getKey();
+        log.info("ExpAnalysisJob says: " + jobKey + " executing at " + new Date());
         //调用httpClient url执行远程方法
-        //testSimpleExampleRun();
-        testdoExpStatisticsDefaultRun();
+        if(context.getJobDetail().getJobDataMap().containsKey("anaTime")) {
+            String anaTime = context.getJobDetail().getJobDataMap().getString("anaTime");
+            doExpStatisticsRun(url, anaTime);
+        }else{
+            doExpStatisticsDefaultRun(url);
+        }
     }
 
-    public void testSimpleExampleRun() {
-        String url = "http://127.0.0.1:8080/expAna/expStatistics.do";
-        String anaTime = "2016-12-05 00:00:00";
-
+    /**
+     * 默认，只需要传递url，不需要传递时间参数，（默认时间（昨天）：example 2016-12-05 00:00:00 ）
+     * @param url
+     */
+    public void doExpStatisticsDefaultRun(String url) {
+//        String url = "http://127.0.0.1:8080/expAna/doExpStatisticsDefault.do";
         Map params = new HashMap();
-        params.put("anaTime", anaTime);
-
         log.info("url excute start.");
 
         HttpClientUtil util = HttpClientUtil.getInstance();
@@ -75,9 +80,17 @@ public class ExpAnalysisJob implements Job {
         log.info("url excute finished.");
     }
 
-    public void testdoExpStatisticsDefaultRun() {
-        String url = "http://127.0.0.1:8080/expAna/doExpStatisticsDefault.do";
+    /**
+     * 需要传递时间参数
+     * @param url
+     * @param anaTime
+     */
+    public void doExpStatisticsRun(String url, String anaTime) {
+        /*String url = "http://127.0.0.1:8080/expAna/expStatistics.do";
+        String anaTime = "2016-12-05 00:00:00";*/
         Map params = new HashMap();
+        params.put("anaTime", anaTime);
+
         log.info("url excute start.");
 
         HttpClientUtil util = HttpClientUtil.getInstance();
