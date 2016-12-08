@@ -149,4 +149,23 @@ public class JobService {
         QuartzManager.removeJob(jobName, jobGroup, triggerName);
         log.info("--------------------removeJob end----------------------");
     }
+
+    /**
+     * 获取数据库中所有标示为1的保存的job运行，并更新job的状态
+     */
+    public void startAllJob() {
+        log.info("--------------------startAllJob begin----------------------");
+        HashMap map = new HashMap();
+        map.put("status","1");
+        List<Job> jobList = jobMapper.selectJobListByCon(map);
+        for(int i=0;i<jobList.size();i++){
+            String jobName = jobList.get(i).getJobName();
+            String jobGroup = jobList.get(i).getGroupName();
+            String triggerName = jobList.get(i).getTriggerName();
+            String url = jobList.get(i).getUrl();
+            String cronExpression = jobList.get(i).getCronExpression();
+            QuartzManager.startJob(jobName,jobGroup, triggerName, url, ExpAnalysisJob.class, cronExpression);
+        }
+        log.info("--------------------startAllJob end----------------------");
+    }
 }

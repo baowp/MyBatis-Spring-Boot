@@ -46,8 +46,8 @@ public class CountryService {
         if (country.getPage() != null && country.getRows() != null) {
             PageHelper.startPage(country.getPage(), country.getRows(), "id");
         }
-//        return countryMapper.selectAll();
-        return countryMapper.getCountries();
+        return countryMapper.selectAll();
+//        return countryMapper.getCountries();
     }
 
     public Country getById(Integer id) {

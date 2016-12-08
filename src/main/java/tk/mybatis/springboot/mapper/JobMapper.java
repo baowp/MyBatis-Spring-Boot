@@ -21,4 +21,6 @@ public interface JobMapper  extends MyMapper<Job> {
      * @return
      */
     int updateJobStatus(HashMap map);
+
+    List<Job> selectJobListByCon(HashMap map);
 }

@@ -23,7 +23,7 @@
     #{triggerName},
     #{cronExpression},
     #{url},
-    0)
+    #{status})
   </insert>
 
   <!-- 运行job或者停止job更新数据库中job的状态 -->
@@ -47,6 +47,18 @@
     from job
     WHERE
     group_name = #{groupName}
+  </select>
+
+  <!-- 获取已经新增的job列表 -->
+  <select id="selectJobListByCon" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+    select
+    <include refid="Base_Column_List" />
+    from job
+    <where>
+      <if test="status != null and status != ''">
+        status = #{status}
+      </if>
+    </where>
   </select>
 
 </mapper>

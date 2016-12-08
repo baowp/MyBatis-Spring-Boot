@@ -129,4 +129,18 @@ public class JobController {
         return result;
     }
 
+    /**
+     * 获取数据库中所有标示为1的保存的job运行，并更新job的状态
+     * @param job
+     * @return
+     */
+    @RequestMapping(value = "/startAllJob", method = RequestMethod.GET)
+    public ModelAndView stopJob(Job job) {
+        ModelAndView result = new ModelAndView("redirect:/job");
+        jobService.startAllJob();
+        result.addObject("job", job);
+        result.addObject("msg", "停止job成功");
+        return result;
+    }
+
 }
