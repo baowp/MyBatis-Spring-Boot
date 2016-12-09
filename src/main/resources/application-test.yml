@@ -3,6 +3,8 @@ server:
     context-path:
 
 logging:
+    path: target
+    file: scheduler.log
     level:
         tk.mybatis: INFO
 

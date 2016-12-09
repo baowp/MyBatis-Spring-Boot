@@ -3,6 +3,8 @@ server:
     context-path: #/liuzh/
 
 logging:
+    #path: target
+    file: target/scheduler.log
     level:
         tk.mybatis: debug
 
