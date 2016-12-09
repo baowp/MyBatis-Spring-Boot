@@ -1,4 +1,4 @@
-package tk.mybatis.springboot.enumPkg;/**
+package tk.mybatis.springboot.enums;/**
  * Created by Administrator on 2016/12/7.
  */
 
